@@ -37,10 +37,10 @@ e = eppMatrix(eppPairs,  pairs = ~ male + female)
 class(e)
 showClass("eppMatrix")
 
-data(westerholzBreeding)
-data(westerholzEPP)
-b = westerholzBreeding[westerholzBreeding$year_ == 2010, ]
-eppPairs = westerholzEPP[westerholzEPP$year_ == 2010, ]
+data(bluetit_breeding)
+data(bluetit_epp)
+b = bluetit_breeding[bluetit_breeding$year_ == 2010, ]
+eppPairs = bluetit_epp[bluetit_epp$year_ == 2010, ]
 
 breedingDat  = SpatialPointsBreeding(b, id = 'id', coords = ~ x + y, breeding = ~ male + female)
 eppDat = eppMatrix(eppPairs, pairs = ~ male + female)

@@ -19,6 +19,8 @@ setGeneric("DirichletPolygons", function(x, boundary, ...)   standardGeneric("Di
 							} )
 			
 			P = lapply(P,  function(x) SpatialPolygons(list( Polygons(list(Polygon(x[, c('x', 'y')])), ID = x$id[1] ) )) )
+			P = lapply(P, function(pp) { proj4string(pp) = CRS(proj4string(x)); pp } )
+      
 			P = lapply(P,function(pj) gIntersection(boundary, pj, id = slot(slot(pj, 'polygons')[[1]], 'ID')))
 			P = do.call(rbind, P) 
 			P = SpatialPolygonsDataFrame(P, data = data.frame(ID = x@id, row.names = x@id))

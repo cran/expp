@@ -19,7 +19,8 @@
 	epp(breedingDat, polygonsDat, eppDat, maxlag = 3)
 	as.data.frame(x)
 \S4method{plot}{epp,missing}(x, zoom, maxlag = 3, zoom.col = 'grey', ...)  
-	}
+\S4method{barplot}{epp}(height, relativeValues = FALSE, ...)   
+}
 
 \arguments{
   \item{breedingDat}{
@@ -31,12 +32,24 @@
   \item{maxlag}{
      A numeric value indicating the maximum breeding distance for which male-female combinations should be calculated. When plotting it defines the outermost row of neightbors plotted around a focal id set by zoom}
   
-  \item{x}{an \code{epp} object}  
+  \item{x, height}{an \code{epp} object}  
   \item{zoom}{a \code{SpatialPointsBreeding} id which is used for subsetting prior to plot}
   \item{zoom.col}{background color of the id (and hence the polygon) set by \code{zoom} }  
+  
+   \item{relativeValues}{ Defines the unit of the y-axis. TRUE plots proportions, FALSE absolute numbers. }  
+  
   \item{...}{further arguments to pass to \code{plot.SpatialPointsBreeding} and \code{plot.SpatialPolygons*}  }    
+
 }
 
+\details{
+'plot' plots the territories, the identity of males ('m...') and females ('f...') at breeding sites (numbers), and the extra-pair events (dashed red arrows). Individuals that had extra-pair offspring are marked red. The parameter 'zoom' can be used to make a detailed visual check of a specific location (nestbox) and its surroundings.
+\cr
+\cr
+'barplot' displays the distribution of extra-pair events over different breeding distances between the partners (in the number of territories) as vertical bars. Note that the distribution of all potential extra-pair partners is displayed as a dashed line only if the argument 'relativeValues' is TRUE.
+
+
+}
 
 \value{
 Returns an S4-class epp-object with 5 slots:
@@ -110,12 +123,12 @@ Returns an S4-class epp-object with 5 slots:
 \dontrun{   
   ### Real data example
   # Raw datasets 
-  data(westerholzBreeding)
-  data(westerholzEPP)
+  data(bluetit_breeding)
+  data(bluetit_epp)
   # select one year 
   year = 2010
-  b = westerholzBreeding[westerholzBreeding$year_ == year, ]
-  eppPairs = westerholzEPP[westerholzEPP$year_ == year, ]
+  b = bluetit_breeding[bluetit_breeding$year_ == year, ]
+  eppPairs = bluetit_epp[bluetit_epp$year_ == year, ]
   
   # prepare data
   breedingDat  = SpatialPointsBreeding(b, id = 'id', coords = ~ x + y, breeding = ~ male + female)
