@@ -1,16 +1,27 @@
 Package: expp
 Type: Package
-Title: Spatial analysis of extra-pair paternity
-Version: 1.1
-Date: 2014-Aug-01
-Author: Mihai Valcu, Lotte Schlicht
-Maintainer: Mihai Valcu <valcu@orn.mpg.de>
-Depends: R (>= 3.0.0), methods, sp, spdep, rgeos, deldir
-Suggests: knitr, spatstat, lme4
+Title: Spatial Analysis of Extra-Pair Paternity
+Version: 1.2.2
+Authors@R: c(
+  person("Mihai", "Valcu", ,"valcu@orn.mpg.de", c("aut", "cre")),
+  person("Lotte", "Schlicht", role = "ctb")
+    )
+Depends: R(>= 3.4.0)
+Imports: graphics, methods, sp, stats, spdep, rgeos, deldir, spatstat
+Suggests: roxygen2, knitr, lme4
 VignetteBuilder: knitr
-Description: Tools and data to accompany Schlicht, Valcu and Kempenaers "Spatial patterns of extra-pair paternity: beyond paternity gains and losses"
+Description: 
+    Tools and data to accompany Schlicht, L., Valcu, M., & Kempenaers, B. (2015) <doi:10.1111/1365-2656.12293>. Spatial patterns of extra-pair paternity: beyond paternity gains and losses. Journal of Animal Ecology, 84(2), 518-531.
 License: GPL-3
-Packaged: 2014-08-05 06:46:45 UTC; valcu
+Encoding: UTF-8
+RoxygenNote: 6.0.1
+Collate: 'AAA.R' 'eppMatrix.R' 'SpatialPointsBreeding.R'
+        'DirichletPolygons.R' 'epp.R' 'eppSimDat.R' 'expp-package.R'
+        'neighborsDataFrame.R'
 NeedsCompilation: no
+Packaged: 2018-07-02 10:36:42 UTC; mihai
+Author: Mihai Valcu [aut, cre],
+  Lotte Schlicht [ctb]
+Maintainer: Mihai Valcu <valcu@orn.mpg.de>
 Repository: CRAN
-Date/Publication: 2014-08-05 09:12:20
+Date/Publication: 2018-07-02 10:50:02 UTC

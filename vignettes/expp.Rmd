@@ -1,30 +1,35 @@
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Blue Tits Case study}
 -->
 
-### Extra-pair paternity in Blue Tits (_Cyanistes caeruleus_): a case study from Westerholz, Bavaria, Germany
+---
+title: "Extra-pair paternity in Blue Tits (_Cyanistes caeruleus_): a case study from Westerholz, Bavaria, Germany"
+author: "Mihai Valcu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Blue Tits Case study}
+  %\VignetteEngine{knitr::rmarkdown}
+---
 
-#### Supplement to Schlicht, Valcu and Kempenaers _"Spatial patterns of extra-pair paternity: beyond paternity gains and losses"_ (in prep.)
+#### Supplement to  Schlicht, Valcu and Kempenaers Schlicht, Lotte, Mihai Valcu, and Bart Kempenaers. "Spatial patterns of extra-pair paternity: beyond paternity gains and losses." Journal of Animal Ecology 84.2 (2015): 518-531.
 
 
-##### 1. Getting started
- * Download and install [R](http://cran.rstudio.com/).
- * Open R, and install _expp_ by copying the following line into your R console:  
-```{r eval=FALSE }
-install.packages("expp")
-```  
+******
+
+#### 1. Getting started
+ * Download and install R.
+ * Open R, and install _expp_ with `install.packages("expp")` :  
+
   
 ```{r echo=FALSE, message=FALSE}
-require(rgeos); require(sp); require(spdep); require(spatstat); require(deldir)
+require(rgeos); require(sp); require(spdep); require(deldir)
 par(mar = c(0,0,1,0) )
 ```
- * To load _expp_ type:   
-```{r,message=FALSE } 
-require(expp)
-```
+ * To load _expp_ type `r require(expp)`:   
 
-##### 2. Load datasets
+#### 2. Load datasets
 For info on the data-sets type: 
 ```{r eval=FALSE }
 help(bluetit_breeding)
@@ -32,16 +37,11 @@ help(bluetit_epp)
 help(bluetit_boundary)
 ```
 
-```{r, eval = FALSE}
+```{r}
 data(bluetit_breeding)
 head(bluetit_breeding[bluetit_breeding$year_ == 2011, ])
 ```
 
-```{r, echo=FALSE, results='asis'}
-data(bluetit_breeding)
-knitr::kable(head(bluetit_breeding[bluetit_breeding == 2011, ]))
-data(bluetit_breeding)
-```
 
 ```{r, eval = FALSE}
 data(bluetit_epp)
@@ -58,9 +58,9 @@ data(bluetit_boundary)
 summary(bluetit_boundary)
 ```
 
-##### 3. Prepare data
+#### 3. Prepare data
 
-###### 3.1 Split by year (each year needs to be processed separately)
+##### 3.1 Split by year (each year needs to be processed separately)
 
 ```{r}
 b = split(bluetit_breeding, bluetit_breeding$year_)
@@ -81,7 +81,7 @@ p = bluetit_boundary[bluetit_boundary$year_ %in% c("2009", "2010"), ]
 
 ```
 
-###### 3.2 Run a couple of helper functions on both breeding data and extra-pair paternity data 
+##### 3.2 Run a couple of helper functions on both breeding data and extra-pair paternity data 
 ```{r tidy=FALSE}
 breedingDat = lapply(b, SpatialPointsBreeding, coords= ~x+y, id='id', breeding= ~male + female, 
   proj4string = CRS(proj4string(p)))
@@ -91,14 +91,14 @@ eppDat = lapply(e, eppMatrix, pairs = ~ male + female)
 
 ```
 
-###### 3.3. Compute Dirichlet polygons based on the `SpatialPointsBreeding` object
+##### 3.3. Compute Dirichlet polygons based on the `SpatialPointsBreeding` object
 
 ```{r}
 polygonsDat = mapply(DirichletPolygons, x = breedingDat, boundary = split(p, p$year_)) 
 ```  
 ********************************************************************************
 
-##### 4. All the objects are now ready to be processed by the `epp` function.
+#### 4. All the objects are now ready to be processed by the `epp` function.
 ```{r}
 maxlag = 10
 eppOut = mapply(FUN = epp, breedingDat, polygonsDat, eppDat, maxlag)
@@ -114,7 +114,7 @@ for(year in c("2009", "2010") ) {
 
 
 ```
-###### Select one nest-box of a given year and zoom in.
+##### Select one nest-box of a given year and zoom in.
 ```{r, warning=FALSE, dpi=100, fig.width=6, fig.height=8, fig.align='left'}
 year = '2010'
 box = 110
@@ -127,16 +127,16 @@ par(op)
 ```{r results='hide',fig.width=8, fig.height=6}
 op = par(mfrow = c(1,2))
     
-barplot(eppOut[[1]],relativeValues = TRUE, main = 2009) 
-legend(x="topright", legend = c('Observed', 'Potential'), lty = c(1, 2),bty='n')
-barplot(eppOut[[2]], relativeValues = TRUE, main = 2010)
+#barplot(eppOut[[1]],relativeValues = TRUE, main = 2009) 
+#legend(x="topright", legend = c('Observed', 'Potential'), lty = c(1, 2),bty='n')
+#barplot(eppOut[[2]], relativeValues = TRUE, main = 2010)
 
 par(op)
 ```
 
-##### 5. Fitting a _glmm_ 
+#### 5. Fitting a _glmm_ 
 
-###### 5.1 Convert `eppOut` (a list of 2 _epp_ objects) into a `data.frame`.
+##### 5.1 Convert `eppOut` (a list of 2 _epp_ objects) into a `data.frame`.
 ```{r}
 dat = lapply(eppOut, as.data.frame) # a list of data.frame(s)
 dat = do.call(rbind, dat)
@@ -144,14 +144,14 @@ dat$year_ = dat$year__MALE; dat$year__FEMALE = NULL
 
 ```
 
-###### 5.2. Data transformations prior to modelling.
+##### 5.2. Data transformations prior to modelling.
 
-####### Rescale rank; rank 1 becames rank 0
+###### Rescale rank; rank 1 becames rank 0
 ```{r}
 dat$rank = dat$rank - min(dat$rank)
 table(dat$rank)
 ```
-####### Center and re-scale breeding asynchrony (i.e. the difference in laying data between male and female) within each rank.
+###### Center and re-scale breeding asynchrony (i.e. the difference in laying data between male and female) within each rank.
 
 ```{r}
 center = function(x) { return(x - mean(x, na.rm = TRUE)) }
@@ -170,8 +170,8 @@ dat$relative_asynchrony_FEMALE = unsplit(lapply(split(dat$asynchrony, FEMALE_spl
 dat$relative_asynchrony_FEMALE = scale2(dat$relative_asynchrony_FEMALE)
 ```
 
-###### 5.3 Run _glmm_
-####### Check if sample size is sufficient for the number of variables we aim to include into the model.
+##### 5.3 Run _glmm_
+###### Check if sample size is sufficient for the number of variables we aim to include into the model.
 ```{r eval=FALSE}
 table(dat$epp, dat$year_) #extra-pair frequency by year.
 ```
@@ -179,7 +179,7 @@ table(dat$epp, dat$year_) #extra-pair frequency by year.
 knitr::kable(table(dat$epp, dat$year_))
 ```
 
-####### Run the glmm model (this may take a while depending on your system!).
+###### Run the glmm model (this may take a while depending on your system!).
 ```{r eval=FALSE}
 require(lme4)
 fm = glmer(epp ~ rank + male_age_MALE + relative_asynchrony_MALE + relative_asynchrony_FEMALE + 

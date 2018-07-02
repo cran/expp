@@ -1,32 +1,21 @@
-## ----eval=FALSE----------------------------------------------------------
-#  install.packages("expp")
-
 ## ----echo=FALSE, message=FALSE-------------------------------------------
-require(rgeos); require(sp); require(spdep); require(spatstat); require(deldir)
+require(rgeos); require(sp); require(spdep); require(deldir)
 par(mar = c(0,0,1,0) )
-
-## ----,message=FALSE------------------------------------------------------
-require(expp)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  help(bluetit_breeding)
 #  help(bluetit_epp)
 #  help(bluetit_boundary)
 
-## ----, eval = FALSE------------------------------------------------------
-#  data(bluetit_breeding)
-#  head(bluetit_breeding[bluetit_breeding$year_ == 2011, ])
-
-## ----, echo=FALSE, results='asis'----------------------------------------
+## ------------------------------------------------------------------------
 data(bluetit_breeding)
-knitr::kable(head(bluetit_breeding[bluetit_breeding == 2011, ]))
-data(bluetit_breeding)
+head(bluetit_breeding[bluetit_breeding$year_ == 2011, ])
 
-## ----, eval = FALSE------------------------------------------------------
+## ---- eval = FALSE-------------------------------------------------------
 #  data(bluetit_epp)
 #  head(bluetit_epp[bluetit_epp$year_ == 2011, ])
 
-## ----, echo=FALSE, results='asis'----------------------------------------
+## ---- echo=FALSE, results='asis'-----------------------------------------
 data(bluetit_epp)
 knitr::kable(head(bluetit_epp[bluetit_epp == 2011, ]))
 
@@ -77,7 +66,7 @@ for(year in c("2009", "2010") ) {
 
 
 
-## ----, warning=FALSE, dpi=100, fig.width=6, fig.height=8, fig.align='left'----
+## ---- warning=FALSE, dpi=100, fig.width=6, fig.height=8, fig.align='left'----
 year = '2010'
 box = 110
 eppOut10 = eppOut[[year]]
@@ -88,9 +77,9 @@ par(op)
 ## ----results='hide',fig.width=8, fig.height=6----------------------------
 op = par(mfrow = c(1,2))
     
-barplot(eppOut[[1]],relativeValues = TRUE, main = 2009) 
-legend(x="topright", legend = c('Observed', 'Potential'), lty = c(1, 2),bty='n')
-barplot(eppOut[[2]], relativeValues = TRUE, main = 2010)
+#barplot(eppOut[[1]],relativeValues = TRUE, main = 2009) 
+#legend(x="topright", legend = c('Observed', 'Potential'), lty = c(1, 2),bty='n')
+#barplot(eppOut[[2]], relativeValues = TRUE, main = 2010)
 
 par(op)
 
