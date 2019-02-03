@@ -58,7 +58,7 @@ setGeneric("DirichletPolygons", function(x, boundary, ...)   standardGeneric("Di
 
 .DirichletPolygons <- function(x, boundary) {
 		# x is a SpatialPointsBreeding, boundary is a SpatialPolygons*
-            coords = coordinates(x)
+      coords = coordinates(x)
             
 			p  =  tile.list(deldir(coords[,1], coords[,2], suppressMsge = TRUE))
 			p  = lapply(p, function(P) data.frame(x = P$x, y = P$y) )
@@ -74,13 +74,20 @@ setGeneric("DirichletPolygons", function(x, boundary, ...)   standardGeneric("Di
 							} )
 			
 			P = lapply(P,  function(x) SpatialPolygons(list( Polygons(list(Polygon(x[, c('x', 'y')])), ID = x$id[1] ) )) )
+
 			P = lapply(P, function(pp) { proj4string(pp) = CRS(proj4string(x)); pp } )
       
 			P = lapply(P,function(pj) gIntersection(boundary, pj, id = slot(slot(pj, 'polygons')[[1]], 'ID')))
+
 			P = do.call(rbind, P) 
 			P = SpatialPolygonsDataFrame(P, data = data.frame(ID = x@id, row.names = x@id))
 			
-		P
+      # bdry line
+      bl = as( gUnionCascaded(P), 'SpatialLines')
+
+      P$outerPoly = as.vector(gTouches( P, bl , byid = TRUE))
+
+      P
     }
 
 #' @rdname      DirichletPolygons

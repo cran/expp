@@ -10,11 +10,14 @@
 \usage{
 DirichletPolygons(x, boundary, ...)
 
-\S4method{DirichletPolygons}{SpatialPointsBreeding,missing}(x, boundary, ...)
+\S4method{DirichletPolygons}{SpatialPointsBreeding,missing}(x, boundary,
+  ...)
 
-\S4method{DirichletPolygons}{SpatialPointsBreeding,integer}(x, boundary, width)
+\S4method{DirichletPolygons}{SpatialPointsBreeding,integer}(x, boundary,
+  width)
 
-\S4method{DirichletPolygons}{SpatialPointsBreeding,SpatialPolygons}(x, boundary)
+\S4method{DirichletPolygons}{SpatialPointsBreeding,SpatialPolygons}(x,
+  boundary)
 }
 \arguments{
 \item{x}{A \code{\link{SpatialPointsBreeding}} object.}

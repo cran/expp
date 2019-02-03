@@ -4,21 +4,18 @@
 \name{epp-class}
 \alias{epp-class}
 \alias{epp}
-\alias{epp-class}
 \alias{as.data.frame}
 \alias{as.data.frame,epp-method}
 \alias{plot,epp,missing-method}
 \alias{plot.epp}
 \alias{barplot}
 \alias{barplot,epp-method}
-\alias{plot,epp,missing-method}
-\alias{barplot,epp-method}
-\alias{as.data.frame,epp-method}
 \title{Building data-set for realized and unrealized EPP-pairs}
 \usage{
 epp(breedingDat, polygonsDat, eppDat, maxlag = 3)
 
-\S4method{plot}{epp,missing}(x, zoom, maxlag = 3, zoom.col = "grey", ...)
+\S4method{plot}{epp,missing}(x, zoom, maxlag = 3, zoom.col = "grey",
+  ...)
 
 \S4method{barplot}{epp}(height, relativeValues = FALSE, ...)
 

@@ -19,9 +19,7 @@ setClass("SpatialPointsBreeding", representation(
         # TODO
             # polygynous males
             # multiple br. att.
-        }, 
-  
-  prototype = list(id_boundary= FALSE)      
+        }     
  )
 
 
