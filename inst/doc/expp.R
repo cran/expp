@@ -1,29 +1,29 @@
-## ----echo=FALSE, message=FALSE-------------------------------------------
+## ----echo=FALSE, message=FALSE------------------------------------------------
 require(rgeos); require(sp); require(spdep); require(deldir)
 par(mar = c(0,0,1,0) )
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  help(bluetit_breeding)
 #  help(bluetit_epp)
 #  help(bluetit_boundary)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 data(bluetit_breeding)
 head(bluetit_breeding[bluetit_breeding$year_ == 2011, ])
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  data(bluetit_epp)
 #  head(bluetit_epp[bluetit_epp$year_ == 2011, ])
 
-## ---- echo=FALSE, results='asis'-----------------------------------------
+## ---- echo=FALSE, results='asis'----------------------------------------------
 data(bluetit_epp)
 knitr::kable(head(bluetit_epp[bluetit_epp == 2011, ]))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 data(bluetit_boundary)
 summary(bluetit_boundary)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 b = split(bluetit_breeding, bluetit_breeding$year_)
 e = split(bluetit_epp, bluetit_epp$year_) 
 
@@ -41,7 +41,7 @@ e = e[c("2009", "2010")]
 p = bluetit_boundary[bluetit_boundary$year_ %in% c("2009", "2010"), ]
 
 
-## ----tidy=FALSE----------------------------------------------------------
+## ----tidy=FALSE---------------------------------------------------------------
 breedingDat = lapply(b, SpatialPointsBreeding, coords= ~x+y, id='id', breeding= ~male + female, 
   proj4string = CRS(proj4string(p)))
 
@@ -49,10 +49,10 @@ eppDat = lapply(e, eppMatrix, pairs = ~ male + female)
 
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 polygonsDat = mapply(DirichletPolygons, x = breedingDat, boundary = split(p, p$year_)) 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 maxlag = 10
 eppOut = mapply(FUN = epp, breedingDat, polygonsDat, eppDat, maxlag)
 
@@ -66,7 +66,7 @@ for(year in c("2009", "2010") ) {
 
 
 
-## ---- warning=FALSE, dpi=100, fig.width=6, fig.height=8, fig.align='left'----
+## ---- warning=FALSE, dpi=100, fig.width=6, fig.height=8, fig.align='left'-----
 year = '2010'
 box = 110
 eppOut10 = eppOut[[year]]
@@ -74,7 +74,7 @@ plot(eppOut10 , zoom = box, maxlag = 2,cex = .7,  border = 'white', col = 'grey7
 
 par(op)
 
-## ----results='hide',fig.width=8, fig.height=6----------------------------
+## ----results='hide',fig.width=8, fig.height=6---------------------------------
 op = par(mfrow = c(1,2))
     
 #barplot(eppOut[[1]],relativeValues = TRUE, main = 2009) 
@@ -83,17 +83,17 @@ op = par(mfrow = c(1,2))
 
 par(op)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 dat = lapply(eppOut, as.data.frame) # a list of data.frame(s)
 dat = do.call(rbind, dat)
 dat$year_ = dat$year__MALE; dat$year__FEMALE = NULL
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 dat$rank = dat$rank - min(dat$rank)
 table(dat$rank)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 center = function(x) { return(x - mean(x, na.rm = TRUE)) }
 scale2 = function(x) { return(x/(2*sd(x, na.rm = TRUE))) }
 
@@ -109,13 +109,13 @@ FEMALE_splitBy = paste(dat$year_, dat$id_FEMALE, dat$female, dat$rank, sep = "_"
 dat$relative_asynchrony_FEMALE = unsplit(lapply(split(dat$asynchrony, FEMALE_splitBy), center), FEMALE_splitBy)
 dat$relative_asynchrony_FEMALE = scale2(dat$relative_asynchrony_FEMALE)
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  table(dat$epp, dat$year_) #extra-pair frequency by year.
 
-## ----echo = FALSE, results='asis'----------------------------------------
+## ----echo = FALSE, results='asis'---------------------------------------------
 knitr::kable(table(dat$epp, dat$year_))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  require(lme4)
 #  fm = glmer(epp ~ rank + male_age_MALE + relative_asynchrony_MALE + relative_asynchrony_FEMALE +
 #               (1|male) + (1|female) + (1|year_), data = dat, family = binomial)

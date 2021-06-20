@@ -4,7 +4,8 @@
 \name{bluetit_breeding}
 \alias{bluetit_breeding}
 \title{Blue Tit breeding data.}
-\format{A data frame with 1025 observations on the following 10 variables.
+\format{
+A data frame with 1025 observations on the following 10 variables.
 \itemize{ 
      \item year_       numeric. The year of the observation.
      \item id          numeric. The identity of the nest box in which the
@@ -17,7 +18,8 @@
      \item male_age    character. The age class of the male ('juv' = 1st year breeder; 'adult' = older)
      \item male_tarsus numeric. tarsus length (mm))
      \item study_area  character. The study area name.  
-     }}
+     }
+}
 \description{
 Breeding data recorded for two Blue Tit populations in Kolbeterberg, Vienna,
 Austria (1998 through 2004) and Westerholz, Bavaria, Germany (2007 through

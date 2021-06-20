@@ -4,10 +4,12 @@
 \name{bluetit_boundary}
 \alias{bluetit_boundary}
 \title{Study area boundary.}
-\format{A SpatialPolygonsDataFrame with 12 SpatialPolygons.  
+\format{
+A SpatialPolygonsDataFrame with 12 SpatialPolygons.  
 \describe{
  \item{list("year_")}{numeric. The year of the observation.} 
- }}
+ }
+}
 \description{
 \code{SpatialPolygonsDataFrame} Study area boundary of two Blue Tit
 populations: Kolbeterberg, Vienna, Austria (1998 through 2004) and

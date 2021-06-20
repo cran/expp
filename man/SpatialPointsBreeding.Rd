@@ -9,17 +9,44 @@
 \title{Converts a \code{data.frame} to an object of class
 \code{SpatialPointsBreeding}}
 \usage{
-SpatialPointsBreeding(data, proj4string, coords = ~x + y,
-  breeding = ~male + female, id)
+SpatialPointsBreeding(
+  data,
+  proj4string,
+  coords = ~x + y,
+  breeding = ~male + female,
+  id
+)
 
-\S4method{plot}{SpatialPointsBreeding,missing}(x, pch = 20,
-  axes = FALSE, add = FALSE, xlim = NULL, ylim = NULL, ...,
-  cex = 1, col = "grey", lwd = 1, bg = "grey90")
+\S4method{plot}{SpatialPointsBreeding,missing}(
+  x,
+  pch = 20,
+  axes = FALSE,
+  add = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  ...,
+  cex = 1,
+  col = "grey",
+  lwd = 1,
+  bg = "grey90"
+)
 
-\S4method{plot}{SpatialPointsBreeding,eppMatrix}(x, y, pch = 20,
-  axes = FALSE, add = FALSE, xlim = NULL, ylim = NULL, ...,
-  cex = 1, col = "grey", col.epp = "red", lwd = 1, lty = 2,
-  bg = "grey90")
+\S4method{plot}{SpatialPointsBreeding,eppMatrix}(
+  x,
+  y,
+  pch = 20,
+  axes = FALSE,
+  add = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  ...,
+  cex = 1,
+  col = "grey",
+  col.epp = "red",
+  lwd = 1,
+  lty = 2,
+  bg = "grey90"
+)
 }
 \arguments{
 \item{data}{a \code{\link{data.frame}} containing the coordinates 

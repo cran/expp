@@ -4,8 +4,14 @@
 \alias{eppSimDat}
 \title{Type I error rate simulations}
 \usage{
-eppSimDat(N = 10, meanClutch = 10, eppRate = 0.1, eppMax = 12,
-  eppMales = 0.35, nLags = 3)
+eppSimDat(
+  N = 10,
+  meanClutch = 10,
+  eppRate = 0.1,
+  eppMax = 12,
+  eppMales = 0.35,
+  nLags = 3
+)
 }
 \arguments{
 \item{N}{Number of breeding pairs; default value is 10}

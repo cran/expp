@@ -14,8 +14,7 @@
 \usage{
 epp(breedingDat, polygonsDat, eppDat, maxlag = 3)
 
-\S4method{plot}{epp,missing}(x, zoom, maxlag = 3, zoom.col = "grey",
-  ...)
+\S4method{plot}{epp,missing}(x, zoom, maxlag = 3, zoom.col = "grey", ...)
 
 \S4method{barplot}{epp}(height, relativeValues = FALSE, ...)
 
